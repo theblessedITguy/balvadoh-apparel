@@ -1,0 +1,146 @@
+﻿import { useState } from 'react'
+
+const collection = [
+  {
+	name: 'The Form Coat',
+	detail: 'Recycled wool / Stone',
+	price: '$420',
+	image: 'https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&w=900&q=85',
+  },
+  {
+	name: 'Everyday Knit',
+	detail: 'Organic cotton / Ink',
+	price: '$180',
+	image: 'https://images.unsplash.com/photo-1485968579580-b6d095142e6e?auto=format&fit=crop&w=900&q=85',
+  },
+  {
+	name: 'Soft Structure Trouser',
+	detail: 'Tencel twill / Clay',
+	price: '$240',
+	image: 'https://images.unsplash.com/photo-1506629905607-d9c297d4e5f2?auto=format&fit=crop&w=900&q=85',
+  },
+]
+
+function ArrowIcon() {
+  return <span aria-hidden="true">↗</span>
+}
+
+function App() {
+  const [menuOpen, setMenuOpen] = useState(false)
+  const [email, setEmail] = useState('')
+  const [submitted, setSubmitted] = useState(false)
+
+  const handleSubmit = (event) => {
+	event.preventDefault()
+	if (email.trim()) setSubmitted(true)
+  }
+
+  return (
+	<div className="site-shell">
+	  <header className="site-header">
+		<a className="wordmark" href="#top" aria-label="Balvadoh Apparel home">
+		  BALVADOH
+		  <small>APPAREL</small>
+		</a>
+		<button
+		  className="menu-toggle"
+		  type="button"
+		  aria-expanded={menuOpen}
+		  aria-controls="main-navigation"
+		  onClick={() => setMenuOpen(!menuOpen)}
+		>
+		  <span>{menuOpen ? 'Close' : 'Menu'}</span>
+		  <i />
+		</button>
+		<nav id="main-navigation" className={menuOpen ? 'main-nav is-open' : 'main-nav'}>
+		  <a href="#new">New arrivals</a>
+		  <a href="#collection">Collection</a>
+		  <a href="#journal">Journal</a>
+		  <a href="#about">About</a>
+		</nav>
+		<div className="header-actions">
+		  <button type="button" aria-label="Search">Search</button>
+		  <button type="button" aria-label="Shopping bag">Bag (0)</button>
+		</div>
+	  </header>
+
+	  <main id="top">
+		<section className="hero" id="new">
+		  <img src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=1800&q=90" alt="Model wearing the Balvadoh new season collection" />
+		  <div className="hero-overlay" />
+		  <div className="hero-copy">
+			<p className="eyebrow light">Chapter 01 — 2025</p>
+			<h1>The new<br /><em>ritual.</em></h1>
+			<a className="button button-light" href="#collection">Explore the collection <ArrowIcon /></a>
+		  </div>
+		  <p className="hero-note">Clothing for a life<br />well considered.</p>
+		</section>
+
+		<section className="intro section-pad" id="about">
+		  <p className="eyebrow">Balvadoh apparel</p>
+		  <div className="intro-layout">
+			<h2>Made for the<br /><em>in-between.</em></h2>
+			<div className="intro-body">
+			  <p>We make quiet, lasting pieces for the spaces between plans. Thoughtful clothes with a point of view, designed in our studio and made to become part of your everyday.</p>
+			  <a className="text-link" href="#journal">Read our story <ArrowIcon /></a>
+			</div>
+		  </div>
+		</section>
+
+		<section className="collection section-pad" id="collection">
+		  <div className="section-heading">
+			<div>
+			  <p className="eyebrow">The essentials</p>
+			  <h2>Objects to <em>live in.</em></h2>
+			</div>
+			<a className="text-link" href="#collection">View all pieces <ArrowIcon /></a>
+		  </div>
+		  <div className="product-grid">
+			{collection.map((item) => (
+			  <a className="product-card" href="#collection" key={item.name}>
+				<div className="product-image"><img src={item.image} alt={item.name} /></div>
+				<div className="product-info">
+				  <div><h3>{item.name}</h3><p>{item.detail}</p></div>
+				  <strong>{item.price}</strong>
+				</div>
+			  </a>
+			))}
+		  </div>
+		</section>
+
+		<section className="feature" id="journal">
+		  <div className="feature-image"><img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=1200&q=85" alt="Details from the Balvadoh studio" /></div>
+		  <div className="feature-copy">
+			<p className="eyebrow">The Balvadoh journal</p>
+			<h2>In praise of<br /><em>slowness.</em></h2>
+			<p>Good design asks us to pause. A closer look at the materials, hands, and small decisions behind Chapter 01.</p>
+			<a className="button button-dark" href="#journal">Read the journal <ArrowIcon /></a>
+		  </div>
+		</section>
+
+		<section className="newsletter section-pad">
+		  <p className="eyebrow">Stay in the know</p>
+		  <h2>Letters from<br /><em>the studio.</em></h2>
+		  {submitted ? (
+			<p className="success-message">Thank you — you’re on the list.</p>
+		  ) : (
+			<form className="signup-form" onSubmit={handleSubmit}>
+			  <label className="sr-only" htmlFor="email">Email address</label>
+			  <input id="email" type="email" placeholder="Your email address" value={email} onChange={(event) => setEmail(event.target.value)} required />
+			  <button type="submit" aria-label="Subscribe"><ArrowIcon /></button>
+			</form>
+		  )}
+		</section>
+	  </main>
+
+	  <footer className="site-footer">
+		<div className="footer-brand"><a className="wordmark" href="#top">BALVADOH<small>APPAREL</small></a><p>Clothing for a life<br />well considered.</p></div>
+		<div className="footer-column"><p className="eyebrow">Explore</p><a href="#new">New arrivals</a><a href="#collection">Collection</a><a href="#journal">Journal</a></div>
+		<div className="footer-column"><p className="eyebrow">Connect</p><a href="#top">Instagram</a><a href="#top">Pinterest</a><a href="mailto:hello@balvadoh.com">Contact</a></div>
+		<div className="footer-bottom"><span>© 2025 Balvadoh Apparel</span><span>Designed with intention</span></div>
+	  </footer>
+	</div>
+  )
+}
+
+export default App
